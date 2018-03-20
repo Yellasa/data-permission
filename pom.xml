@@ -71,4 +71,25 @@
 			<version>${mvn.mysql.version}</version>
 		</dependency>
 	</dependencies>
+
+
+	<!--<profiles>-->
+	<!--<profile>-->
+	<!--&lt;!&ndash; 本地开发环境 &ndash;&gt;-->
+	<!--<id>home</id>-->
+	<!--<properties>-->
+	<!--<profilesActive>home</profilesActive>-->
+	<!--</properties>-->
+	<!--<activation>-->
+	<!--&lt;!&ndash; 设置默认激活这个配置 &ndash;&gt;-->
+	<!--<activeByDefault>true</activeByDefault>-->
+	<!--</activation>-->
+	<!--</profile>-->
+	<!--<profile>-->
+	<!--<id>commpany</id>-->
+	<!--<properties>-->
+	<!--<profilesActive>commpany</profilesActive>-->
+	<!--</properties>-->
+	<!--</profile>-->
+	<!--</profiles>-->
 </project>

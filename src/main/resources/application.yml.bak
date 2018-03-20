@@ -1,0 +1,46 @@
+
+#---
+#app
+server:
+    port: 8080
+# 主数据库
+spring:
+  profiles: commpany
+  datasource:
+    #type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://192.168.11.225:3306/himalayas_dev?useUnicode=true&characterEncoding=UTF-8
+#    username: himalayas_dev
+#    password: himalayas_dev
+    url: jdbc:mysql://localhost:3306/master?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    platform: mysql
+    initialize: true
+    continue-on-error: true
+#========== Mybatis
+mybatis:
+  typeAliasesPackage: com.farpower.datapermission
+  mapperLocations: classpath:mybatis/**/*.xml
+
+
+#---
+#
+#server:
+#    port: 8080
+## 主数据库
+#spring:
+#  datasource:
+#    #type: com.alibaba.druid.pool.DruidDataSource
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/master?useUnicode=true&characterEncoding=UTF-8
+#    username: root
+#    password: 123456
+#    platform: mysql
+#    initialize: true
+#    continue-on-error: true
+#  profiles: home
+##========== Mybatis
+#mybatis:
+#  typeAliasesPackage: com.farpower.datapermission
+#  mapperLocations: classpath:mybatis/**/*.xml
