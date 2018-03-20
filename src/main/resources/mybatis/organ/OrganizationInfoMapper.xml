@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farpower.himalayas.organ.mapper.OrganizationInfoDao">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.farpower.himalayas.organ.model.OrganizationInfo">
+		<result column="id" property="id" />
+		<result column="version" property="version" />
+		<result column="name" property="name" />
+		<result column="parent_id" property="parentId" />
+		<result column="code" property="code" />
+		<result column="duty" property="duty" />
+		<result column="type" property="type" />
+		<result column="tenant_id" property="tenantId" />
+		<result column="persson_liable" property="perssonLiable" />
+		<result column="remark" property="remark" />
+		<result column="create_by" property="createBy" />
+		<result column="create_org" property="createOrg" />
+		<result column="create_time" property="createTime" />
+		<result column="update_by" property="updateBy" />
+		<result column="update_org" property="updateOrg" />
+		<result column="update_time" property="updateTime" />
+		<result column="deleted" property="deleted" />
+		<result column="enabled" property="enabled" />
+	</resultMap>
+
+	<sql id="BaseTable">
+		fp_organization_info
+	</sql>
+	<sql id="BaseColumn">
+		t.id,
+		t.version,
+		t.name,
+		t.parent_id,
+		t.code,
+		t.duty,
+		t.type,
+		t.tenant_id,
+		t.persson_liable,
+		t.remark,
+		t.create_by,
+		t.create_org,
+		t.create_time,
+		t.update_by,
+		t.update_org,
+		t.update_time,
+		t.deleted,
+		t.enabled
+	</sql>
+
+	<select id="getRootOrgan" resultMap="BaseResultMap">
+		SELECT <include refid="BaseColumn" />
+		  FROM <include refid="BaseTable" /> t
+		<where>
+			AND t.parent_id is null
+			AND t.deleted = 0
+		</where>
+	</select>
+
+	<select id="getRootOrganByTenant" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		SELECT <include refid="BaseColumn" />
+		  FROM <include refid="BaseTable" /> t
+		<where>
+			AND t.tenant_id = #{tenantId}
+			AND t.deleted = 0
+			AND NOT EXISTS
+				(SELECT * FROM fp_organization_info tt
+				WHERE t.parent_id = tt.id
+				AND t.tenant_id = tt.tenant_id)
+		</where>
+	</select>
+
+	<select id="getChildrenOrganList" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		SELECT <include refid="BaseColumn" />
+		  FROM <include refid="BaseTable" /> t
+		<where>
+			AND t.parent_id = #{parentId}
+			AND t.deleted = 0
+		</where>
+	</select>
+
+	<select id="getAllChildrenOrganListByCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT <include refid="BaseColumn" />
+		  FROM <include refid="BaseTable" /> t
+		<where>
+			AND t.code like concat(${_parameter}, '%')
+			AND t.deleted = 0
+		</where>
+	</select>
+</mapper>
